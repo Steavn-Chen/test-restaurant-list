@@ -1,8 +1,8 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require("body-parser")
 
-const RestaurantList = require('./models/seeds/restaurant.json')
 const Restaurant = require('./models/restaurant')
 
 const app = express()
@@ -26,6 +26,8 @@ app.engine("hbs", exphbs({ defaultLayout: "main", extname: "hbs" }));
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
   return Restaurant.find()
@@ -33,6 +35,15 @@ app.get('/', (req, res) => {
   .then(restaurants => res.render('index', { restaurants })
   )
 })
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+app.post("/restaurants/new", (req, res) => {
+  const body = req.body
+  Restaurant.create(body)
+  .then(() => res.redirect('/'))
+  .catch(err => console.error(err))
+});
 
 app.get('/restaurants/:res_id', (req, res) => {
   const resId = req.params.res_id
