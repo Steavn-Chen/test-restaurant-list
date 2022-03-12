@@ -154,17 +154,14 @@ app.get('/search', (req, res) => {
     errorMessage = '請輸入想要搜尋的字元 !'
     res.render('errorSearch', { message: errorMessage})
   }
-  const restaurants = RestaurantList.results.filter(i => {
-    return (
-      i.name.toLowerCase().trim().includes(keyword.toLowerCase()) ||
-      i.category.toLowerCase().trim().includes(keyword.toLowerCase())
-    );
+  return Restaurant.find()
+  .lean()
+  .then(restaurants => {
+    const results = restaurants.filter(i => {
+      return i.name.toLowerCase().includes(keyword.toLowerCase()) || i.category.toLowerCase().includes(keyword.toLowerCase())
+    })
+    res.render('index', { restaurants: results})
   })
-  // if (restaurants.length === 0) {
-  //   errorMessage = "沒有找到相應字元的餐廳 !";
-  //   res.render("errorSearch", { message: errorMessage });
-  // }
-  res.render('index', { restaurants })
 })
 
 app.listen(port, () => {
