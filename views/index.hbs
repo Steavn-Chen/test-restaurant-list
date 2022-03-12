@@ -57,11 +57,12 @@
               {{this.rating}}
               <i class="fas fa-star fa-xs"></i>
             </span>
-            <span>
-              <a href="/restaurants/new">create<i class="fas fa-calendar-plus"></i><i
-                  class="bi bi-file-earmark-plus"></i>
+            <span >
+              <form action="/restaurants/{{this._id}}/delete" method="post">
+              <a href="/restaurants/{{this._id}}/edit"><i class="far fa-edit " style="font-size: 1.1rem; color:rgb(79, 205, 236);"></i>
               </a>
-
+              <button type="submit" style="border: none;background:rgb(255, 255, 255);color:rgb(212, 22, 22);font-size: 1.1rem"><i class="bi bi-trash3"></i></button>
+              </form>
             </span>
           </div>
         </div>
