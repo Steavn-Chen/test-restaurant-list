@@ -107,7 +107,7 @@
         <td>{{this.rating}}</td>
         {{!-- <td>{{this.rating}}</td> --}}
         <td>
-          <form action="/restaurants/{{this._id}}/delete" method="post">
+          <form action="/restaurants/{{this._id}}/?_method=DELETE" method="post">
             <a href="/restaurants/{{this._id}}"><i class="bi bi-card-text mr-2"
                 style="font-size: 1.1rem; color:rgb(50, 116, 238);"></i></a>
             <a href="/restaurants/{{this._id}}/edit"><i class="far fa-edit "
@@ -147,7 +147,7 @@
               <i class="fas fa-star fa-xs"></i>
             </span>
             <span>
-              <form action="/restaurants/{{this._id}}/delete" method="post">
+              <form action="/restaurants/{{this._id}}/?_method=DELETE" method="post">
                 <a href="/restaurants/{{this._id}}"><i class="bi bi-card-text mr-2"
                     style="font-size: 1.1rem; color:rgb(50, 116, 238);"></i></a>
                 <a href="/restaurants/{{this._id}}/edit"><i class="far fa-edit "

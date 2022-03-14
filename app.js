@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require("body-parser")
+const methodOverride = require('method-override')
 const helpers = require('./tools/helpers.js')
 const Restaurant = require('./models/restaurant')
 
@@ -27,7 +28,7 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   return Restaurant.find()
@@ -71,7 +72,7 @@ app.get("/restaurants/:res_id/edit", (req, res) => {
     })
     .catch((err) => console.error(err));
 });
-app.post("/restaurants/:res_id/edit", (req, res) => {
+app.put("/restaurants/:res_id", (req, res) => {
   const resId = req.params.res_id;
   const { name,
     name_en,
@@ -85,8 +86,8 @@ app.post("/restaurants/:res_id/edit", (req, res) => {
     // 第一種方法
     // return Restaurant.update(
     // return Restaurant.updateOne(
-    return Restaurant.findByIdAndUpdate(
-      // return Restaurant.findOneAndUpdate(
+    // return Restaurant.findByIdAndUpdate(
+      return Restaurant.findOneAndUpdate(
       { _id: resId },
       {
         name,
@@ -140,7 +141,7 @@ app.post("/restaurants/:res_id/edit", (req, res) => {
   //     .catch((err) => console.error(err))
   // );
 });
-app.post("/restaurants/:res_id/delete", (req, res) => {
+app.delete("/restaurants/:res_id", (req, res) => {
   const resId = req.params.res_id;
   // 第一種方法
   // return Restaurant.findById({ _id: resId})
