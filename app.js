@@ -176,6 +176,19 @@ app.get('/search', (req, res) => {
   })
 })
 
+app.get('/restaurants/sort/:type/:order', (req, res) => {
+  const { type, order } = req.params
+  console.log(type, order)
+  return Restaurant.find()
+    .lean()
+    .sort({ [type]: [order] })
+    .then((restaurants) => {
+      console.log(restaurants[0]);
+      return res.render("index", { restaurants });
+    })
+    .catch((err) => console.log(err));
+})
+
 app.listen(port, () => {
   console.log(`The web is running http://localhost:${port}`)
 })
