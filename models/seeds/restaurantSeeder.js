@@ -1,16 +1,8 @@
-const mongoose = require('mongoose')
+require('../../config/mongoose.js')
 const RestaurantList = require('./restaurant.json')
 const Restaurant = require('../restaurant')
-mongoose.connect("mongodb://localhost/restaurant-list-g", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb is error!')
-})
+const db = require('../../config/mongoose.js')
 
 // 第一種方法 setTimeout
 // db.once('open', () => {
@@ -26,7 +18,6 @@ db.on('error', () => {
 
 // 第二種方法 insertMany
 db.once('open', () => {
-  console.log("mongodb is connected!");
   Restaurant.insertMany(RestaurantList.results)
   .then(() => db.close())
   console.log('done!')
