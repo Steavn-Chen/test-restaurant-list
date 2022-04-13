@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require("body-parser")
 const methodOverride = require('method-override')
+const session = require('express-session')
 const router = require('./routes')
 const helpers = require('./tools/helpers.js')
 require('./config/mongoose')
@@ -16,6 +17,17 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
+app.use(session({
+  secret: 'RestaurantIsSecret',
+  resave: false,
+  saveUninitialized: true
+}))
+app.use((req, res, next) => {
+  console.log(req.headers.cookie)
+  console.log(req.session)
+  console.log(req.sessionID)
+  next()
+})
 
 app.use(router)
 
