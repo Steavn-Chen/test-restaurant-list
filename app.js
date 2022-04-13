@@ -5,6 +5,7 @@ const bodyParser = require("body-parser")
 const methodOverride = require('method-override')
 const session = require('express-session')
 const router = require('./routes')
+const userPassport = require('./config/passport.js')
 const helpers = require('./tools/helpers.js')
 require('./config/mongoose')
 
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
   console.log(req.sessionID)
   next()
 })
-
+userPassport(app)
 app.use(router)
 
 app.listen(port, () => {
