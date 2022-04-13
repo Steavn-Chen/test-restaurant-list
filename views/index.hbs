@@ -9,24 +9,26 @@
       </a>
 
       <form action="/" method="post">
-      <div class="badge  text-wrap" style="width: 12rem; background-color:rgb(247, 159, 76)">
-        <span>
+        <div class="badge  text-wrap" style="width: 12rem; background-color:rgb(247, 159, 76)">
+          <span>
 
-        <a href="/restaurants/new"  style="font-family: 'Comforter', cursive;font-size: 20px;color:rgb(255, 232, 255);letter-spacing: 3px;text-decoration:none"><i class="fas fa-cookie-bite "></i>    Add    Restaurant 
-        {{!-- <p><i class="bi bi-file-earmark-plus " style="font-size:1.5rem"></i></p> --}}
-        </a>
-        </span>
-        {{!-- {{#ifCond interFaceModel 'list' }}
-        <input type="text" name="displayMode" id="" hidden value="card">
-        <button type="submit" style="background-color: white;border: none"><i class="fas fa-th"
-            style="font-size: 1.5rem;"></i></button>
-        {{else}}
-        <input type="text" name="displayMode" id="" hidden value="list">
-        <button type="submit" style="background-color: white;border: none"><i class="bi bi-list"
-            style="font-size: 1.5rem;"></i></button>
-        {{/ifCond}} --}}
-      </div>
-    </form>
+            <a href="/restaurants/new"
+              style="font-family: 'Comforter', cursive;font-size: 20px;color:rgb(255, 232, 255);letter-spacing: 3px;text-decoration:none"><i
+                class="fas fa-cookie-bite "></i> Add Restaurant
+              {{!-- <p><i class="bi bi-file-earmark-plus " style="font-size:1.5rem"></i></p> --}}
+            </a>
+          </span>
+          {{!-- {{#ifCond interFaceModel 'list' }}
+          <input type="text" name="displayMode" id="" hidden value="card">
+          <button type="submit" style="background-color: white;border: none"><i class="fas fa-th"
+              style="font-size: 1.5rem;"></i></button>
+          {{else}}
+          <input type="text" name="displayMode" id="" hidden value="list">
+          <button type="submit" style="background-color: white;border: none"><i class="bi bi-list"
+              style="font-size: 1.5rem;"></i></button>
+          {{/ifCond}} --}}
+        </div>
+      </form>
 
     </div>
   </nav>
@@ -57,12 +59,14 @@
       <div class="mr-2">
         {{#ifCond interFaceModel 'list' }}
         <input type="text" name="displayMode" id="" hidden value="card">
-        <button type="submit"  style="background-color: rgb(113, 223, 243);border: none;border-radius: 5px; color:aliceblue"><i class="bi bi-card-list"
-            style="font-size: 1.5rem;"></i></button>
+        <button type="submit"
+          style="background-color: rgb(113, 223, 243);border: none;border-radius: 5px; color:aliceblue"><i
+            class="bi bi-card-list" style="font-size: 1.5rem;"></i></button>
         {{else}}
         <input type="text" name="displayMode" id="" hidden value="list">
-        <button type="submit"  style="background-color: rgb(113, 223, 243);border: none;border-radius: 5px; color:aliceblue;"><i class="bi bi-list"
-            style="font-size: 1.5rem;"></i></button>
+        <button type="submit"
+          style="background-color: rgb(113, 223, 243);border: none;border-radius: 5px; color:aliceblue;"><i
+            class="bi bi-list" style="font-size: 1.5rem;"></i></button>
         {{/ifCond}}
       </div>
     </form>
@@ -126,7 +130,7 @@
 
 {{else}}
 <div class="container mt-5">
-  <div class="row">
+  <div class="row row-cols-1 2">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
@@ -141,7 +145,7 @@
             <i class="fas fa-utensils pr-2"></i>
             {{this.category}}
           </div>
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between border border-1 ">
             <span class="badge badge-pill badge-danger font-weight-normal">
               {{this.rating}}
               <i class="fas fa-star fa-xs"></i>

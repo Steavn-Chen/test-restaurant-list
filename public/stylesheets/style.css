@@ -199,3 +199,17 @@ header {
   }
  }
  
+ .login-page {
+   /* background-color:#226089; */
+   margin-top: 100px;
+   /* border: 1px solid  rgb(0, 255, 191); */
+   /* margin: 0 auto; */
+ }
+.login-page .card{
+   /* border: 1px solid rgb(240, 155, 155); */
+   box-shadow: 5px 5px 5px rgba(197, 117, 73, 0.76);
+   background-color: #b1a6a6;
+    /* margin: 50px auto 0;  */
+    /* width: 800px; */
+    /* height: 800px; */
+ }
