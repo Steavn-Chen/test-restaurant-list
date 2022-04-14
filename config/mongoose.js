@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/restaurant-list-g", {
+mongoose.connect('mongodb://localhost/restaurant-list-g', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
   // useFindAndModify: false,
-});
+})
 const db = mongoose.connection;
 
 db.on("error", () => {

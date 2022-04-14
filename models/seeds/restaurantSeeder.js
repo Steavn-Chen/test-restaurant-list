@@ -1,4 +1,3 @@
-require('../../config/mongoose.js')
 const RestaurantList = require('./restaurant.json')
 const Restaurant = require('../restaurant')
 
