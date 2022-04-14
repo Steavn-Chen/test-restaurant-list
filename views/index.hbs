@@ -48,9 +48,7 @@
         </div>
       </div>
     </form>
-
   </div>
-
 </div>
 <!-- restaurant list -->
 {{#ifCond interFaceModel 'list' }}
@@ -67,11 +65,9 @@
     {{#each restaurants}}
     <tbody>
       <tr>
-        {{!-- <th scope="row">1</th> --}}
         <td>{{this.name}}</td>
         <td>{{this.category}}</td>
         <td>{{this.rating}}</td>
-        {{!-- <td>{{this.rating}}</td> --}}
         <td>
           <form action="/restaurants/{{this._id}}/?_method=DELETE" method="post">
             <a href="/restaurants/{{this._id}}"><i class="bi bi-card-text mr-2"
@@ -89,7 +85,6 @@
     {{/each}}
   </table>
 </div>
-
 {{else}}
 <div class="container mt-5">
   <div class="row row-cols-1 2">
@@ -102,7 +97,6 @@
         </a>
         <div class="card-body p-3">
           <h6 class="card-title mb-1">{{this.name}}</h6>
-
           <div class="restaurant-category mb-1">
             <i class="fas fa-utensils pr-2"></i>
             {{this.category}}
@@ -128,7 +122,6 @@
         </div>
       </div>
       {{/each}}
-
     </div>
   </div>
 </div>
