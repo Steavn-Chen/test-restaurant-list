@@ -18,18 +18,18 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
+
 app.use(session({
   secret: 'RestaurantIsSecret',
   resave: false,
   saveUninitialized: true
 }))
+userPassport(app)
 app.use((req, res, next) => {
-  console.log(req.headers.cookie)
-  console.log(req.session)
-  console.log(req.sessionID)
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
   next()
 })
-userPassport(app)
 app.use(router)
 
 app.listen(port, () => {

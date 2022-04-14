@@ -5,55 +5,55 @@
       {{!-- {{> message}} --}}
       <form action='/users/register' method='POST'>
         <div class='form-group mt-2'>
-          <label for='name' class="mt-2">Name</label>
+          <label for='name' class='mt-2'>Name</label>
           <input
             type='text'
             id='name'
             name='name'
             class='form-control mt-1'
             placeholder='Enter Name'
-            value="{{name}}"
+            value='{{name}}'
           />
         </div>
         <div class='form-group mt-2'>
-          <label for='email' class="mt-2">Email</label>
+          <label for='email' class='mt-2'>Email</label>
           <input
             type='email'
             id='email'
             name='email'
             class='form-control mt-1'
             placeholder='Enter Email'
-            value="{{email}}"
+            value='{{email}}'
           />
         </div>
         <div class='form-group mt-2'>
-          <label for='password' class="mt-2">Password</label>
+          <label for='password' class='mt-2'>Password</label>
           <input
             type='password'
             id='password'
             name='password'
             class='form-control mt-1'
             placeholder='Enter Password'
-            value="{{password}}"
+            value='{{password}}'
           />
         </div>
         <div class='form-group mt-2'>
-          <label for='confirmPassword' class="mt-2">Confirm Password</label>
+          <label for='confirmPassword' class='mt-2'>Confirm Password</label>
           <input
             type='password'
             id='confirmPassword'
             name='confirmPassword'
             class='form-control mt-1'
             placeholder='Confirm Password'
-            value="{{confirmPassword}}"
+            value='{{confirmPassword}}'
           />
         </div>
-        <div class="d-grid gap-2 mt-4">
-        <button
-          type='submit'
-          class='btn btn-primary btn-block'
-        >Register</button>
-        {{!-- <a href="/auth/facebook" class="btn btn-info">Facebook Login</a> --}}
+        <div class='d-grid gap-2 mt-4'>
+          <button
+            type='submit'
+            class='btn btn-primary btn-block'
+          >Register</button>
+          {{! <a href="/auth/facebook" class="btn btn-info">Facebook Login</a> }}
         </div>
       </form>
       <p class='lead mt-4'>
