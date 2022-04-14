@@ -8,13 +8,15 @@ router.get('/new', (req, res) => {
 })
 router.post('/new', (req, res) => {
   const body = req.body
-  Restaurant.create(body)
+  const userId = req.user._id
+  Restaurant.create({ ...body, userId })
     .then(() => res.redirect('/'))
     .catch((err) => console.error(err))
 })
 router.get('/:res_id', (req, res) => {
   const resId = req.params.res_id
-  return Restaurant.findById(resId)
+  const userId = req.user._id
+  return Restaurant.findOne({ _id: resId, userId })
     .lean()
     .then((restaurant) => {
       res.render('show', { restaurant })
@@ -23,7 +25,8 @@ router.get('/:res_id', (req, res) => {
 })
 router.get('/:res_id/edit', (req, res) => {
   const resId = req.params.res_id
-  return Restaurant.findById(resId)
+  const userId = req.user._id
+  return Restaurant.findOne({ _id: resId, userId })
     .lean()
     .then((restaurant) => {
       res.render('edit', { restaurant })
@@ -32,6 +35,7 @@ router.get('/:res_id/edit', (req, res) => {
 })
 router.put('/:res_id', (req, res) => {
   const resId = req.params.res_id
+  const userId = req.user._id
   const {
     name,
     name_en,
@@ -48,7 +52,7 @@ router.put('/:res_id', (req, res) => {
   return Restaurant.updateOne(
   // return Restaurant.findByIdAndUpdate(
   // return Restaurant.findOneAndUpdate(
-    { _id: resId },
+    { _id: resId, userId },
     {
       name,
       name_en,
@@ -103,6 +107,7 @@ router.put('/:res_id', (req, res) => {
 })
 router.delete('/:res_id', (req, res) => {
   const resId = req.params.res_id
+  const userId = req.user._id
   // 第一種方法
   // return Restaurant.findById({ _id: resId})
   // .then(res => {
@@ -111,7 +116,7 @@ router.delete('/:res_id', (req, res) => {
   // .then(() => res.redirect('/'))
   // .catch(err => console.error(err))
   // 第二種方法
-  return Restaurant.deleteOne({ _id: resId })
+  return Restaurant.deleteOne({ _id: resId, userId })
     .then(() => res.redirect('/'))
     .catch((err) => console.error(err))
 })

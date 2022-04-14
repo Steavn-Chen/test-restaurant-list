@@ -5,7 +5,8 @@ const Restaurant = require('../../models/restaurant')
 
 router.get('/:type/:order', (req, res) => {
   const { type, order } = req.params
-  return Restaurant.find()
+  const userId = req.user._id
+  return Restaurant.find({ userId })
     .lean()
     .sort({ [type]: [order] })
     .then((restaurants) => {

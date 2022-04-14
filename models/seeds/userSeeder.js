@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const bcrypt = require('bcryptjs')
 const userData = require('./user.json')
 const resData = require('./restaurant.json')
 const User = require('../user.js')
@@ -13,10 +14,12 @@ db.once('open', async () => {
     userData.results.forEach(async (user, uIndex) => {
       try {
         const { name, email, password } = user
+        let salt = bcrypt.genSaltSync(10)
+        let hash = bcrypt.hashSync(password, salt)
         let newUser = await User.create({
           name,
           email,
-          password,
+          password: hash
         })
         const RES_LENGTH = 3
         for (let j = 0; j < RES_LENGTH; j++) {
