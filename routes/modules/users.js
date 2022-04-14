@@ -40,12 +40,12 @@ router.post('/register', (req, res) => {
     .then(user => {
       if (user) {
         errors.push({ message: '這個電子郵件己經被註冊了。' })
-        return res.render('register', { 
-          name, 
-          email, 
-          password, 
+        return res.render('register', {
+          name,
+          email,
+          password,
           confirmPassword,
-          errors 
+          errors
         })
       }
       return bcrypt

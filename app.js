@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
@@ -11,7 +14,7 @@ const helpers = require('./tools/helpers.js')
 require('./config/mongoose')
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT
 
 app.engine("hbs", exphbs({ defaultLayout: "main", extname: "hbs", helpers }));
 app.set('view engine', 'hbs')
@@ -21,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use(session({
-  secret: 'RestaurantIsSecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -37,6 +40,6 @@ app.use((req, res, next) => {
 })
 app.use(router)
 
-app.listen(port, () => {
-  console.log(`The web is running http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`The web is running http://localhost:${PORT}`)
 })
