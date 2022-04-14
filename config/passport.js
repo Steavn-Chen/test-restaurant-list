@@ -8,15 +8,20 @@ module.exports = (app) => {
 
   passport.use(new LocalStrategy({
     usernameField: 'email',
+    passReqToCallback: true,
     session: false
-  }, (email, password, done) => {
+  }, (req,email, password, done) => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
+          // return done(null, false, req.flash('error_msg', '這個帳號還沒被註冊。'))
+          // return done(null, false, { type: 'error_msg', message: '這個帳號還沒被註冊。'})
           return done(null, false, { message: '這個帳號還沒被註冊。'})
         }
         if (user.password !== password) {
-          return done(null, false, { message: '電郵或密碼錯誤。'})
+          // return done(null, false, req.flash('error_msg', '電郵或密碼錯誤 !'))
+          // return done(null, false, { type: 'error_msg', message: '電郵或密碼錯誤。' })
+          return done(null, false, { message: '電郵或密碼錯誤。' })
         }
         return done(null, user)
       })

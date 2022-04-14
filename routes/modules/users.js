@@ -9,41 +9,43 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login',
+  // failureMessage: true,
+  failureFlash: true
 }))
 router.get('/register', (req, res) => {
   res.render('register')
 })
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
-  console.log(name, email, password, confirmPassword)
-  // if (!name || !email || !password || !confirmPassword) {
-  //   console.log('所有欄位都是必填的 !')
-  //   res.render('register', {
-  //     name,
-  //     email,
-  //     password,
-  //     confirmPassword,
-  //   })
-  // }
-  // if (password !== confirmPassword) {
-  //   console.log('密碼與確認密碼不相符 !')
-  //   res.render('register', {
-  //     name,
-  //     email,
-  //     password,
-  //     confirmPassword,
-  //   })
-  // }
+  console.log(req.body)
+  const errors = []
+  if (!name || !email || !password || !confirmPassword) {
+    errors.push({ message: '所有欄位都是必填的。' })
+  }
+  if (password !== confirmPassword) {
+    errors.push({ message: '密碼與確認密碼不相符。' })
+  }
+  if (errors.length) {
+    return res.render('register', {
+      name,
+      email,
+      password,
+      confirmPassword,
+      errors
+    })
+  }
   User.findOne({ email })
     .lean()
     .then(user => {
       if (user) {
-        console.log('這個電子郵件己經被註冊了。')
+        errors.push({ message: '這個電子郵件己經被註冊了。' })
         return res.render('register', { 
           name, 
           email, 
           password, 
-          confirmPassword })
+          confirmPassword,
+          errors 
+        })
       }
       return User.create({
         name,
@@ -57,6 +59,7 @@ router.post('/register', (req, res) => {
 })
 router.get('/logout', (req, res) => {
   req.logout()
+  req.flash('success_msg', '成功登出。')
   res.redirect('/users/login')
 })
 
