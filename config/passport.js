@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
+var GoogleStrategy = require('passport-google-oauth20').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 
@@ -40,7 +41,7 @@ module.exports = (app) => {
         clientID: process.env.FACEBOOK_ID,
         clientSecret: process.env.FACEBOOK_SECRET,
         callbackURL: process.env.FACEBOOK_CALLBACK,
-        profileFields: ['displayName', 'email'],
+        profileFields: ['displayName', 'email']
       },
       function (accessToken, refreshToken, profile, done) {
         const { email, name } = profile._json
@@ -104,6 +105,40 @@ module.exports = (app) => {
       }
     )
   )
+  passport.use(
+    new GoogleStrategy(
+      // {
+      //   clientID:
+      //     '1074980343957-8hfocm74ef0m2s5dm3f8vobjoce80a8i.apps.googleusercontent.com',
+      //   clientSecret: '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',
+      //   callbackURL: 'http://localhost:3000/auth/google/callback',
+      //   // profileFields: ['displayName', 'email']
+      // },
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CLIENT_CALLBACK,
+        profileFields: ['displayName', 'email']
+      },
+      function (accessToken, refreshToken, profile, done) {
+        const { name, email } = profile._json
+        const randomPassword = Math.random().toString(36).slice(-10)
+        bcrypt
+          .genSalt(10)
+          .then((salt) => bcrypt.hash(randomPassword, salt))
+          .then((hash) => {
+            return User.findOrCreate(
+              { email },
+              { email, name, password: hash },
+              (err, user) => {
+                return done(err, user)
+              }
+            )
+          })
+      }
+    )
+  )
+
   passport.serializeUser((user, done) => {
     return done(null, user.id)
   })
