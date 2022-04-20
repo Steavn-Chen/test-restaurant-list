@@ -2,7 +2,7 @@
 
 使用 Node.js Express 制作一個餐廳美食網站。
 
-![restaurant-image]('https://github.com/Steavn-Chen/test-restaurant-list/blob/main/public/images/%E7%99%BB%E5%85%A5.PNG')
+![restaurant-image](https://github.com/Steavn-Chen/test-restaurant-list/blob/main/public/images/%E7%99%BB%E5%85%A5.PNG)
 
 ## 功能介紹 
 
