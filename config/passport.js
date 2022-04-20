@@ -137,24 +137,24 @@ module.exports = (app) => {
   passport.use(
     new GitHubStrategy(
       {
-        clientID: 'fcb60b43fdc10293effb',
-        clientSecret: '3dd7cc1ff4c6f3c471a7b70dc3981618c118705b',
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.GITHUB_CLIENT_CALLBACK,
       },
       function (accessToken, refreshToken, profile, done) {
         const randomPassword = Math.random().toString(36).slice(-8)
         const { login, emails } = profile._json
-        bcrypt.genSalt(10).then((salt) => bcrypt.hash(randomPassword, salt))
-          .then(hash => {
+        bcrypt
+          .genSalt(10)
+          .then((salt) => bcrypt.hash(randomPassword, salt))
+          .then((hash) => {
             User.findOrCreate(
               { email: emails[0].value },
-              { email: emails[0].value ,
-                name: login,
-                password: hash 
-              },
+              { email: emails[0].value, name: login, password: hash },
               (err, user) => {
-              return done(err, user)
-            })
+                return done(err, user)
+              }
+            )
           })
       }
     )
