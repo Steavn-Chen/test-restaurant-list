@@ -1,7 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
-var GoogleStrategy = require('passport-google-oauth20').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GitHubStrategy = require('passport-github-oauth20').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 
@@ -84,6 +85,7 @@ module.exports = (app) => {
               }
             )
           )
+          .catch((err) => done(err, false))
         // findOrCreate 第二種寫法
         // bcrypt
         //   .genSalt(10)
@@ -107,13 +109,6 @@ module.exports = (app) => {
   )
   passport.use(
     new GoogleStrategy(
-      // {
-      //   clientID:
-      //     '1074980343957-8hfocm74ef0m2s5dm3f8vobjoce80a8i.apps.googleusercontent.com',
-      //   clientSecret: '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',
-      //   callbackURL: 'http://localhost:3000/auth/google/callback',
-      //   // profileFields: ['displayName', 'email']
-      // },
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -135,10 +130,35 @@ module.exports = (app) => {
               }
             )
           })
+          .catch((err) => done(err, false))
       }
     )
   )
-
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: 'fcb60b43fdc10293effb',
+        clientSecret: '3dd7cc1ff4c6f3c471a7b70dc3981618c118705b',
+        callbackURL: process.env.GITHUB_CLIENT_CALLBACK,
+      },
+      function (accessToken, refreshToken, profile, done) {
+        const randomPassword = Math.random().toString(36).slice(-8)
+        const { login, emails } = profile._json
+        bcrypt.genSalt(10).then((salt) => bcrypt.hash(randomPassword, salt))
+          .then(hash => {
+            User.findOrCreate(
+              { email: emails[0].value },
+              { email: emails[0].value ,
+                name: login,
+                password: hash 
+              },
+              (err, user) => {
+              return done(err, user)
+            })
+          })
+      }
+    )
+  )
   passport.serializeUser((user, done) => {
     return done(null, user.id)
   })

@@ -15,11 +15,23 @@ router.get(
   })
 )
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email' ] }))
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
 router.get(
   '/google/callback',
   passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/users/login'
+  })
+)
+
+router.get(
+  '/github',
+  passport.authenticate('github', { scope: ['user'] })
+)
+router.get(
+  '/github/callback',
+  passport.authenticate('github', {
     successRedirect: '/',
     failureRedirect: '/users/login'
   })
