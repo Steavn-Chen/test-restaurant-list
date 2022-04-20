@@ -18,8 +18,6 @@ module.exports = (app) => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
-          // return done(null, false, req.flash('error_msg', '這個帳號還沒被註冊。'))
-          // return done(null, false, { type: 'error_msg', message: '這個帳號還沒被註冊。'})
           return done(null, false, { message: '這個帳號還沒被註冊。' })
         }
         return bcrypt.compare(password, user.password)
@@ -27,9 +25,6 @@ module.exports = (app) => {
             if (!isMatch) {
               return done(null, false, { message: '電郵或密碼錯誤。' })
             }
-            //   // return done(null, false, req.flash('error_msg', '電郵或密碼錯誤 !'))
-            //   // return done(null, false, { type: 'error_msg', message: '電郵或密碼錯誤。' })
-            //   return done(null, false, { message: '電郵或密碼錯誤。' })
             return done(null, user)
           })
       })
@@ -47,25 +42,6 @@ module.exports = (app) => {
       function (accessToken, refreshToken, profile, done) {
         const { email, name } = profile._json
         const randomPassword = Math.random().toString(36).slice(-8)
-        //  findOne 寫法
-        // User.findOne({ email }).then((user) => {
-        //   if (user) {
-        //     return done(null, user)
-        //   }
-        //   return bcrypt
-        //     .genSalt(10)
-        //     .then((salt) => bcrypt.hash(randomPassword, salt))
-        //     .then((hash) =>
-        //       User.create({
-        //         name,
-        //         email,
-        //         password: hash,
-        //       })
-        //     )
-        //     .then((user) => done(null, user))
-        //     .then((err) => done(err, false))
-        // })
-        // findOrCreate 第一種寫法
         bcrypt
           .genSalt(10)
           .then((salt) => bcrypt.hash(randomPassword, salt))
@@ -86,24 +62,6 @@ module.exports = (app) => {
             )
           )
           .catch((err) => done(err, false))
-        // findOrCreate 第二種寫法
-        // bcrypt
-        //   .genSalt(10)
-        //   .then((salt) => bcrypt.hash(randomPassword, salt))
-        //   .then((hash) =>
-        //     User.findOrCreate(
-        //       { email },
-        //       {
-        //         email,
-        //         name,
-        //         password: hash,
-        //       },
-        //       function (err, user) {
-        //         console.log('A new uxer from "%s" was inserted', user)
-        //         return done(err, user)
-        //       }
-        //     )
-        //   )
       }
     )
   )
