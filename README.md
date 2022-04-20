@@ -18,7 +18,7 @@
 
 - 將專案 clone 到本地端
 
-https://github.com/Steavn-Chen/test_retaurant
+https://github.com/Steavn-Chen/test-restaurant-list.git
 
 - 進入到專案資料夾
 
